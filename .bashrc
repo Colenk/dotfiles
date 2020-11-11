@@ -15,15 +15,15 @@ export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
-#shopt -s histappend
+shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=-1
-HISTFILESIZE=-1
+HISTFILESIZE=100
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+#shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -59,9 +59,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  PS1="\[\033[1;32m\]\342\224\214\342\224\200$([[ $(/opt/vpnbash.sh) == *'10.'* ]] &&  echo "[\[\033[1;34m\]$(/opt/vpnserver.sh)\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]$(/opt/vpnbash.sh)\[\033[1;32m\]]\342\224\200")[\[\033[1;37m\]\u\[\033[01;32m\]@\[\033[01;34m\]\h\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]\w\[\033[1;32m\]]\n\342\224\224\342\224\200\342\224\200\342\225\274[\[\e[01;33m\]\$([[ \$? != 0 ]] && echo \" \342\230\242 \" || echo \" \342\230\205 \")\[\e[01;32m\]] \$([[ \${EUID} == 0 ]] &&  echo '#' || echo '$')\[\e[0m\] "
+  PS1="\[\033[1;32m\]\342\224\214\342\224\200$(if [[ $(pgrep -f htb.conf) ]] ; then  echo "[\[\033[1;34m\]HTB\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]$(/opt/vpnbash.sh)\[\033[1;32m\]]\342\224\200"; elif [[ $(pgrep -f thm.conf) ]] ; then  echo "[\[\033[1;34m\]THM\[\033[1;32m\]]\342\224\200\[[\[\033[1;37m\]$(/opt/vpnbash.sh)\[\033[1;32m\]]\342\224\200"; else echo "\342\224\200"; fi)[\[\033[1;37m\]\u\[\033[01;32m\]@\[\033[01;34m\]\h\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]\w\[\033[1;32m\]]\n\342\224\224\342\224\200\342\224\200\342\225\274[\[\e[01;33m\]\$([[ \$? != 0 ]] && echo \"\342\230\242 \" || echo \"\342\230\205 \")\[\e[01;32m\]] \$([[ \${EUID} == 0 ]] &&  echo '#' || echo '$')\[\e[0m\] "
 else
-    PS1='┌──[\u@\h]─[\w]\n└──╼ \$ '
+  PS1="\[\033[1;32m\]\342\224\214\342\224\200[\[\033[1;37m\]\u\[\033[01;32m\]@\[\033[01;34m\]\h\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]\w\[\033[1;32m\]]\n\342\224\224\342\224\200\342\224\200\342\225\274[\[\e[01;33m\]\$([[ \$? != 0 ]] && echo \" \342\230\242 \" || echo \" \342\230\205 \")\[\e[01;32m\]] \$([[ \${EUID} == 0 ]] &&  echo '#' || echo '$')\[\e[0m\] "
 fi
 
 # Set 'man' colors
@@ -84,7 +84,7 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|screen*)
-  PS1="\[\033[1;32m\]\342\224\214\342\224\200$([[ $(/opt/vpnbash.sh) == *'10.'* ]] &&  echo "[\[\033[1;34m\]$(/opt/vpnserver.sh)\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]$(/opt/vpnbash.sh)\[\033[1;32m\]]\342\224\200")[\[\033[1;37m\]\u\[\033[01;32m\]@\[\033[01;34m\]\h\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]\w\[\033[1;32m\]]\n\342\224\224\342\224\200\342\224\200\342\225\274[\[\e[01;33m\]\$([[ \$? != 0 ]] && echo \"\342\230\242 \" || echo \"\342\230\205 \")\[\e[01;32m\]] \$([[ \${EUID} == 0 ]] &&  echo '#' || echo '$')\[\e[0m\] "
+  PS1="\[\033[1;32m\]\342\224\214\342\224\200$(if [[ $(pgrep -f htb.conf) ]] ; then  echo "[\[\033[1;34m\]HTB\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]$(/opt/vpnbash.sh)\[\033[1;32m\]]\342\224\200"; elif [[ $(pgrep -f thm.conf) ]] ; then  echo "[\[\033[1;34m\]THM\[\033[1;32m\]]\342\224\200\[[\[\033[1;37m\]$(/opt/vpnbash.sh)\[\033[1;32m\]]\342\224\200"; else echo "\342\224\200"; fi)[\[\033[1;37m\]\u\[\033[01;32m\]@\[\033[01;34m\]\h\[\033[1;32m\]]\342\224\200[\[\033[1;37m\]\w\[\033[1;32m\]]\n\[\033[1;32m\]\342\224\224\342\224\200\342\224\200\342\225\274[\[\e[01;33m\]\$([[ \$? != 0 ]] && echo \"\342\230\242 \" || echo \"\342\230\205 \")\[\e[01;32m\]] \$([[ \${EUID} == 0 ]] &&  echo '#' || echo '$')\[\e[0m\] "
   ;;
 *)
   ;;
